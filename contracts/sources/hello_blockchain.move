@@ -1,4 +1,4 @@
-module trial::message {
+module hello_blockchain::message {
     use std::error;
     use std::signer;
     use std::string;

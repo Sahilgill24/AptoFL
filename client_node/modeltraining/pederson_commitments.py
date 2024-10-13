@@ -94,5 +94,6 @@ print("Result of verifying c2:\t\t",result2)
 
 result = v.open(param, addCM, msg1 + msg2 , r1, r2)
 
+# scalar addition and multiplication is valid 
 print("Result of verify Msg+Msg2:\t",result)
 
