@@ -1,0 +1,73 @@
+{
+    "address": "0xe60a1dc08fedd5c73b95f4c7983b12d8c8a22be8dae1ade5a3b98322cb9961b1",
+    "name": "user_registration",
+    "friends": [],
+    "exposed_functions": [
+        {
+            "name": "get_user_id",
+            "visibility": "public",
+            "is_entry": false,
+            "is_view": true,
+            "generic_type_params": [],
+            "params": [
+                "address"
+            ],
+            "return": [
+                "0x1::string::String"
+            ]
+        },
+        {
+            "name": "register_user",
+            "visibility": "public",
+            "is_entry": true,
+            "is_view": false,
+            "generic_type_params": [],
+            "params": [
+                "signer",
+                "0x1::string::String"
+            ],
+            "return": []
+        }
+    ],
+    "structs": [
+        {
+            "name": "UserRegistrationEvent",
+            "is_native": false,
+            "is_event": true,
+            "abilities": [
+                "drop",
+                "store"
+            ],
+            "generic_type_params": [],
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "address"
+                },
+                {
+                    "name": "old_user_id",
+                    "type": "0x1::string::String"
+                },
+                {
+                    "name": "new_user_id",
+                    "type": "0x1::string::String"
+                }
+            ]
+        },
+        {
+            "name": "UserRegistry",
+            "is_native": false,
+            "is_event": false,
+            "abilities": [
+                "key"
+            ],
+            "generic_type_params": [],
+            "fields": [
+                {
+                    "name": "user_id",
+                    "type": "0x1::string::String"
+                }
+            ]
+        }
+    ]
+}

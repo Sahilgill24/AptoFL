@@ -6,6 +6,7 @@ from aptos_sdk.async_client import RestClient,FaucetClient
 from aptos_sdk.transactions import EntryFunction, TransactionArgument, TransactionPayload
 
 from common import NODE_URL,FAUCET_URL
+# contract deployment hash: 0xc5be054409334c9bd15f6433dbe5cf049865897de20232faac05d5caf7f4f202
 # contract object address: 0xe60a1dc08fedd5c73b95f4c7983b12d8c8a22be8dae1ade5a3b98322cb9961b1
 from typing import Any, Dict, Optional
 from aptos_sdk.bcs import Serializer
