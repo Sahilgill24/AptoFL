@@ -1,35 +1,29 @@
-from Crypto import Random
-from Crypto.Random import random
-from Crypto.Util import number
+import os
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import rsa
 
+def generate_large_prime(bit_length):
+    # Generate a large prime number
+    return rsa.generate_private_key(public_exponent=65537, key_size=bit_length, backend=default_backend()).private_numbers().p
 
-
-
-import sys
-
-def generate(param):
-    q = param[1]
-    g = param[2]
-    h = param[3]
-    return q, g, h
-
-class verifier:
+class Verifier:
     def setup(self, security):
-        p = number.getPrime(security, Random.new().read)
-        q = number.getPrime(2 * security, Random.new().read)
-        g = number.getRandomRange(1, q-1)
-        s = number.getRandomRange(1, q-1)
-        h = pow(g, s, q)
+        p = generate_large_prime(security)
+        q = generate_large_prime(security * 2)
+        g = os.urandom(32)  # Generate g as random bytes
+        s = os.urandom(32)  # Secret value as random bytes
+        h = pow(int.from_bytes(g, 'big'), int.from_bytes(s, 'big'), q)
 
         param = (p, q, g, h)
         return param
 
     def open(self, param, c, x, *r):
         result = "False"
-        q, g, h = generate(param)
+        q, g, h = param[1], param[2], param[3]
 
-        sum_r = sum(r)
-        res = (pow(g, x, q) * pow(h, sum_r, q)) % q
+        # Convert randomness from bytes to integers
+        sum_r = sum(int.from_bytes(r_i, 'big') for r_i in r)
+        res = (pow(int.from_bytes(g, 'big'), x, q) * pow(h, sum_r, q)) % q
 
         if c == res:
             result = "True"
@@ -45,30 +39,24 @@ class verifier:
 
     def decrypt(self, param, c, x, r):
         # Reveals the original commitment by showing the value `x` and randomness `r`
-        q, g, h = generate(param)
-        # The decrypted value is (c, x, r), where x is the original value and r is the randomness
+        q, g, h = param[1], param[2], param[3]
         return (c, x, r)
 
-class prover:
+class Prover:
     def commit(self, param, x):
-        q, g, h = generate(param)
-        r = number.getRandomRange(1, q-1)
-        c = (pow(g, x, q) * pow(h, r, q)) % q
+        q, g, h = param[1], param[2], param[3]
+        r = os.urandom(32)
+        c = (pow(int.from_bytes(g, 'big'), x, q) * pow(h, int.from_bytes(r, 'big'), q)) % q
         return c, r
 
 # Security parameter and messages
-security = 80
-msg1 = 1
-msg2 = 2
+security = 1024
+msg1 = 7804
+msg2 = 1254
 
-if len(sys.argv) > 1:
-    msg1 = int(sys.argv[1])
-
-if len(sys.argv) > 2:
-    msg2 = int(sys.argv[2])
-
-v = verifier()
-p = prover()
+# Initialize verifier and prover
+v = Verifier()
+p = Prover()
 
 # Setup phase
 param = v.setup(security)
@@ -107,7 +95,7 @@ print("\nDecryption of c1:", decrypt1)
 print("Decryption of c2:", decrypt2)
 
 # Decrypt the combined commitment for (Msg1 + Msg2)
-combined_r = r1 + r2  # The combined randomness
+combined_r = int.from_bytes(r1, 'big') + int.from_bytes(r2, 'big')  # The combined randomness
 combined_msg = msg1 + msg2  # The combined message
 decrypt_combined = v.decrypt(param, addCM, combined_msg, combined_r)
 
