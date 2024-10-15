@@ -99,10 +99,14 @@ class LinearRegression:
         plt.legend()
         plt.show()
 
+        
+
         return self.parameters, self.loss
 
 
 linear_reg = LinearRegression()
 parameters, loss = linear_reg.train(train_input, train_output, 0.0001, 10)
-print(loss)
-print(parameters)
+loss_final = int(loss * (10**3)) 
+print(loss_final)
+# this is for the normalization of the commitments 
+
