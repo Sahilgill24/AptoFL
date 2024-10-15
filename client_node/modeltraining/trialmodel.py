@@ -10,16 +10,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
-# now putting the pederson commitments in this code :)
+
 
 
 data = pd.read_csv('../trialdata/data.csv')
 data.dropna(inplace=True)
 
-train_input = np.array(data.x[0:500]).reshape(500, 1)
-train_output = np.array(data.y[0:500]).reshape(500, 1)
-test_input = np.array(data.x[500:700]).reshape(199, 1)
-test_output = np.array(data.y[500:700]).reshape(199, 1)
+train_input = np.array(data.x[0:175]).reshape(175, 1)
+train_output = np.array(data.y[0:175]).reshape(175, 1)
 
 class LinearRegression:
     def __init__(self):
