@@ -6,18 +6,23 @@
 # source for this linear regression model 
 # https://www.geeksforgeeks.org/ml-linear-regression/
 import pandas as pd
+import subprocess
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
 
 
 
-data = pd.read_csv('trialdata/data.csv')
+data = pd.read_csv('../trialdata/data.csv')
 data.dropna(inplace=True)
 
 train_input = np.array(data.x[0:175]).reshape(175, 1)
 train_output = np.array(data.y[0:175]).reshape(175, 1)
+script_path = os.path.join("modeltraining", 'run.sh')
+        
+        # Run the bash script
 
 class LinearRegression:
     def __init__(self):
@@ -84,13 +89,16 @@ class LinearRegression:
 
             # Append loss and print
             self.loss.append(cost)
-            cost = int(cost * (10**3)) 
+            cost_int = int(cost * (10**3)) 
             # now this cost will be first encrypted using the Pederson commitments and then in the aggregator.py sent to the blockchain for aggregation and it is normalized so will be /1000
-            print("Iteration = {}, Loss = {}".format(frame + 1, cost))
-            return line,
+            # print("Iteration = {}, Loss = {}".format(frame + 1, cost))
+            # command = ["python3", "modeltraining/pederson_commitments.py", "encrypt_cost", str(cost_int)]
+            # result = subprocess.run(command, check=True, text=True, capture_output=True)
+            #$ print(result.stdout)
+            return line
 
         # Create animation
-        ani = FuncAnimation(fig, update, frames=iters, interval=200, blit=True)
+        ani = FuncAnimation(fig, update, frames=iters, interval=200)
 
         # Save the animation as a video file (e.g., MP4)
         ani.save('linear_regression_A.gif', writer='ffmpeg')
@@ -108,7 +116,6 @@ class LinearRegression:
 
 linear_reg = LinearRegression()
 parameters, loss = linear_reg.train(train_input, train_output, 0.0001, 10)
-loss_final = int(loss * (10**3)) 
-print(loss_final)
+
 # this is for the normalization of the commitments 
 

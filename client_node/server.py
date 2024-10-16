@@ -73,6 +73,7 @@ def stake():
         
         # Run the bash script
         result = subprocess.run(['/bin/bash', script_path], capture_output=True, text=True, check=True)
+        print(result.stdout)
         
         # Return the output of the script
         return jsonify({
