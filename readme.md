@@ -1,16 +1,16 @@
 # APTOFL: Federated Learning Privacy-Preserving Platform
 
 
-<img src="2.jpeg"></img>
+<center><img src="images/1.png"  height="120"></img></center>
 
-APTOFL is a decentralized platform built on the Aptos blockchain, enabling secure, privacy-preserving model training on distributed datasets. It ensures that sensitive data remains private by leveraging Pedersen commitments to keep model parameters (weights and biases) confidential during training.
+<p align="center">APTOFL is a decentralized platform built on the Aptos blockchain, enabling secure, privacy-preserving model training on distributed datasets. It ensures that sensitive data remains private by leveraging Pedersen commitments to keep model parameters (weights and biases) confidential during training.</p>
 
-Aptos is used for decentralized coordination, allowing nodes to participate in the training process and enabling on-chain aggregation of encrypted data.
+<p align="center">Aptos is used for decentralized coordination, allowing nodes to participate in the training process and enabling on-chain aggregation of encrypted data.</p>
 
-Read our wonderful docs <a href="https://aptofl.gitbook.io/aptofl"> here </a>
+<p align="center"><b>Read our wonderful docs <a href="https://aptofl.gitbook.io/aptofl"> here </a></b></p>
 
 
-<img src="3.png"></img>
+<img src="images/3.png"></img>
 
 ## Key Features
 
@@ -27,7 +27,7 @@ Read our wonderful docs <a href="https://aptofl.gitbook.io/aptofl"> here </a>
    After nodes train their models and submit encrypted weights and biases, Aptos-based smart contracts aggregate these encrypted values on-chain, ensuring privacy throughout the process.
 
 
-<img src="1.png"></img>
+<img src="images/2.jpeg"></img>
 
 
 ## Architecture Overview
