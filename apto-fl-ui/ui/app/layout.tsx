@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AutoConnectProvider } from "@/components/auto-connect-provider";
+import { WalletProvider } from "@/components/wallet-provider";
 
 const eiko = localFont({
   src: [
@@ -39,6 +41,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+
   return (
     <html lang="en">
       <body className={`${eiko.variable} ${satoshi.className} antialiased`}>
@@ -48,7 +52,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AutoConnectProvider>
+          <WalletProvider>
+            {children}
+          </WalletProvider>
+          </AutoConnectProvider>
         </ThemeProvider>
       </body>
     </html>

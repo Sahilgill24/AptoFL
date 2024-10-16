@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { WalletSelector } from "@/components/wallet-selector";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -13,14 +14,15 @@ export default function Home() {
       <p className="text-2xl text-muted-foreground">
         Privacy preserving federated learning, now on Aptos
       </p>
-      <Button
+      {/* <Button
         variant={"shine"}
         size={"lg"}
         className="font-semibold"
         onClick={() => router.push("/dashboard")}
       >
         Get Started
-      </Button>
+      </Button> */}
+      <WalletSelector />
     </div>
   );
 }
