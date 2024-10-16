@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -5,7 +6,9 @@ import { useStepper } from "@/components/ui/stepper";
 import { Textarea } from "@/components/ui/textarea";
 import { useNewModelStore } from "@/lib/stores/new-model-store";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import React from "react";
+import React, { use, useState } from "react";
+import axios from "axios";
+import { useModelStore } from "@/lib/stores/model-store";
 
 interface ModelDetailProps {
   hasCompletedAllSteps: boolean;
@@ -15,23 +18,40 @@ interface ModelDetailProps {
 const ModelDetails = (props: ModelDetailProps) => {
   const { setHasCompletedAllSteps } = props;
   const { nextStep, prevStep } = useStepper();
+  const [loading, setLoading] = useState(false);
   const {
     title,
     description,
     epochs,
     stakeAmount,
+    code,
     setTitle,
     setDescription,
     setEpochs,
     setStakeAmount,
   } = useNewModelStore();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setHasCompletedAllSteps(true);
-    nextStep();
+  const { models, addModel } = useModelStore();
 
-    // TODO: API call to create model
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const response = await axios.post("http://127.0.0.1:5000/model_upload", { data: code })
+    console.log(response.data)
+
+
+    addModel({
+      id: "12",
+      title: title,
+      description: description,
+      epochs: epochs,
+      stakeAmount: stakeAmount,
+      createdAt: new Date(),
+      walletAddress: "0x1234567890",
+      status: "draft"
+    })
+    nextStep();
+    setHasCompletedAllSteps(true);
   };
 
   return (

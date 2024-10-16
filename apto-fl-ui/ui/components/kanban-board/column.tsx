@@ -12,7 +12,7 @@ interface ColumnProps {
   headingColor: string;
   models: PublisherModel[];
   column: "draft" | "published" | "trained";
-  setModels: React.Dispatch<React.SetStateAction<PublisherModel[]>>;
+  setModels: (models: PublisherModel[]) => void;
 }
 
 const Column: React.FC<ColumnProps> = ({

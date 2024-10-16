@@ -13,7 +13,7 @@ from matplotlib.animation import FuncAnimation
 
 
 
-data = pd.read_csv('../trialdata/data.csv')
+data = pd.read_csv('trialdata/data.csv')
 data.dropna(inplace=True)
 
 train_input = np.array(data.x[0:175]).reshape(175, 1)
@@ -84,6 +84,8 @@ class LinearRegression:
 
             # Append loss and print
             self.loss.append(cost)
+            cost = int(cost * (10**3)) 
+            # now this cost will be first encrypted using the Pederson commitments and then in the aggregator.py sent to the blockchain for aggregation and it is normalized so will be /1000
             print("Iteration = {}, Loss = {}".format(frame + 1, cost))
             return line,
 

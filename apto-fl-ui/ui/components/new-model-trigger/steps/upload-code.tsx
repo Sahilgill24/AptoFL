@@ -6,13 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronsRight, InfoIcon, UploadIcon } from "lucide-react";
 import { useNewModelStore } from "@/lib/stores/new-model-store";
+import axios from "axios";
 
 const UploadCode = () => {
   const { nextStep } = useStepper();
   const { code, setCode } = useNewModelStore();
+  
 
   const [uploadedFile, setUploadedFile] = useState<File | undefined>();
+  
   const theme = JSON.parse(JSON.stringify(cobalt));
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault(); 
+    setLoading(true);
+    
+    
+    
+    nextStep(); 
+    
+
+  };
 
   useEffect(() => {
     if (uploadedFile) {
